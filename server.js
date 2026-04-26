@@ -89,11 +89,55 @@ app.get("/generate", async (req, res) => {
     const d = detailRes.data;
 
     res.send(`
-      <h1>🎬 ${d.Title}</h1>
-      <img src="${d.Poster}" width="200"/>
+  <html>
+  <head>
+    <title>${d.Title}</title>
+    <style>
+      body {
+        font-family: Arial;
+        background: #111;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+      }
+      .card {
+        background: #1c1c1c;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 400px;
+        margin: auto;
+      }
+      img {
+        width: 100%;
+        border-radius: 10px;
+      }
+      a {
+        display: block;
+        margin: 10px;
+        padding: 10px;
+        background: #ff3c3c;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="card">
+      <h2>🎬 ${d.Title}</h2>
+      <img src="${d.Poster}" />
       <p>⭐ ${d.imdbRating}</p>
       <p>${d.Plot}</p>
-    `);
+
+      <h3>🛍 Shop Inspired</h3>
+      <a href="https://www.amazon.in/s?k=${drama}+outfit">Korean Outfit</a>
+      <a href="https://www.amazon.in/s?k=${drama}+accessories">Accessories</a>
+    </div>
+
+  </body>
+  </html>
+`);
 
   } catch (error) {
     console.log(error);
