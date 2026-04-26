@@ -1,13 +1,6 @@
-const express = require("express");
-const axios = require("axios");
-
-const app = express();
-
-app.get("/", (req, res) => {
-  res.send("Server is running");
-});
-
 app.get("/test", async (req, res) => {
+  const axios = require("axios");
+
   try {
     await axios.post(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`, {
       chat_id: process.env.CHANNEL_ID,
@@ -20,6 +13,3 @@ app.get("/test", async (req, res) => {
     res.send("Error");
   }
 });
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log("Running on " + PORT));
