@@ -2,8 +2,8 @@ app.get("/test", async (req, res) => {
   const axios = require("axios");
 
   try {
-    await axios.post(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`, {
-      chat_id: process.env.CHANNEL_ID,
+    await axios.post(`https://api.telegram.org/bot${process.env.8657422651:AAGWc-F1QO87VRXWp8szv1No37e8eNxBcxU}/sendMessage`, {
+      chat_id: process.env.@kdramadaily,
       text: "🔥 Bot working!"
     });
 
