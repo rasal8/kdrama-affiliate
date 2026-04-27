@@ -194,7 +194,7 @@ app.get("/outfit", (req, res) => {
 app.get("/accessories", (req, res) => {
   const drama = req.query.name;
 
-  const keyword = "korean fashion accessories women";
+  const keyword = getAccessoryKeyword(drama); ✅
 
   const link = `https://www.amazon.in/s?k=${encodeURIComponent(keyword)}&tag=rrasal-21&linkCode=ll1`;
 
