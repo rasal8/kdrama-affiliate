@@ -35,6 +35,7 @@ const map = {
   "business proposal": "A Business Proposal"
 };
 
+
 function similarity(a, b) {
   a = a.toLowerCase();
   b = b.toLowerCase();
@@ -45,7 +46,20 @@ function similarity(a, b) {
   }
   return matches / Math.max(a.length, b.length);
 }
+function getAccessoryKeyword(drama) {
+  const d = drama.toLowerCase();
 
+  if (d.includes("business"))
+    return "korean office accessories women";
+
+  if (d.includes("school"))
+    return "korean cute accessories women";
+
+  if (d.includes("goblin") || d.includes("guardian"))
+    return "korean winter accessories scarf gloves";
+
+  return "korean fashion accessories women";
+}
 app.get("/generate", async (req, res) => {
   let drama = req.query.name;
 
