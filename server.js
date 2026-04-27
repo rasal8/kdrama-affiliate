@@ -248,7 +248,12 @@ app.get("/products", async (req, res) => {
         border-radius:10px;
         width:180px;
       }
-      img { width:100%; border-radius:10px; }
+      img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+}
       a {
         display:block;
         margin-top:10px;
