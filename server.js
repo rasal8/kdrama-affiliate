@@ -88,7 +88,7 @@ if (map[searchName]) {
     const searchRes = await axios.get("https://www.omdbapi.com/", {
       params: {
         apikey: process.env.OMDB_API_KEY,
-        s: drama
+        s: searchName
       }
     });
 
