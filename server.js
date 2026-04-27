@@ -14,6 +14,9 @@ const bot = new TelegramBot(process.env.BOT_TOKEN, {
     }
   }
 });
+bot.on("polling_error", (error) => {
+  console.log("Polling error:", error.message);
+});
 
 const PORT = process.env.PORT || 3000;
 // ✅ ROOT FIX
