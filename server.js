@@ -267,7 +267,7 @@ app.get("/products", async (req, res) => {
     <div class="grid">
       ${products.map(p => `
         <div class="card">
-          <img src="${p.img}">
+          <img src="${p.img}" onerror="this.src='https://via.placeholder.com/200x250?text=Product'">
           <h4>${p.title}</h4>
           <p>${p.price}</p>
           <a href="${p.link}" target="_blank" rel="noopener noreferrer">Buy Now</a>
