@@ -217,19 +217,19 @@ app.get("/products", async (req, res) => {
   const products = [
   {
     title: "Korean Winter Coat",
-    img: "https://i.imgur.com/8Km9tLL.jpg",
+    img: "https://images.unsplash.com/photo-1544441893-675973e31985",
     price: "₹1,499",
     link: `https://www.amazon.in/s?k=${encodeURIComponent(outfit)}&tag=rrasal-21&linkCode=ll1`
   },
   {
     title: "Korean Scarf & Gloves",
-    img: "https://i.imgur.com/3ZQ3Z6Q.jpg",
+    img: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf",
     price: "₹499",
     link: `https://www.amazon.in/s?k=${encodeURIComponent(accessories)}&tag=rrasal-21&linkCode=ll1`
   },
   {
     title: "Korean Accessories Set",
-    img: "https://i.imgur.com/UYiroys.jpg",
+    img: "https://images.unsplash.com/photo-1585386959984-a41552231658",
     price: "₹599",
     link: `https://www.amazon.in/s?k=${encodeURIComponent(accessories + " set")}&tag=rrasal-21&linkCode=ll1`
   }
