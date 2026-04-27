@@ -177,6 +177,15 @@ app.get("/outfit", (req, res) => {
 
   res.redirect(link);
 });
+app.get("/accessories", (req, res) => {
+  const drama = req.query.name;
+
+  const keyword = "korean accessories fashion";
+
+  const link = `https://www.amazon.in/s?k=${encodeURIComponent(keyword)}&tag=rrasal-21&linkCode=ll1`;
+
+  res.redirect(link);
+});
 app.listen(PORT, () => {
   console.log("Server running on " + PORT);
 });
