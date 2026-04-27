@@ -295,18 +295,41 @@ app.listen(PORT, () => {
   console.log("Server running on " + PORT);
 });
 
+const axios = require("axios");
+
 bot.on("message", async (msg) => {
   if (!msg.text || msg.chat.type !== "private") return;
 
-  const text = msg.text;
+  const drama = msg.text;
 
-  const response = `
-🎬 ${text}
-⭐ Rating: 8.5/10
-🎭 Genre: Romance, Drama
+  try {
+    const r = await axios.get("https://www.omdbapi.com/", {
+      params: {
+        apikey: process.env.OMDB_API_KEY,
+        t: drama
+      }
+    });
+
+    const d = r.data;
+
+    const caption = `
+🎬 ${d.Title || drama}
+⭐ Rating: ${d.imdbRating || "8.5"}/10
+🎭 ${d.Genre || "Romance, Drama"}
 
 👉 Download: LINK_HERE
-  `;
+`;
 
-  await bot.sendMessage(process.env.CHANNEL_ID, response);
+    if (d.Poster && d.Poster !== "N/A") {
+      await bot.sendPhoto(process.env.CHANNEL_ID, d.Poster, {
+        caption
+      });
+    } else {
+      await bot.sendMessage(process.env.CHANNEL_ID, caption);
+    }
+
+  } catch (err) {
+    console.log(err);
+    await bot.sendMessage(process.env.CHANNEL_ID, `❌ Error fetching data`);
+  }
 });
