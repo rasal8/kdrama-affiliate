@@ -129,7 +129,7 @@ app.get("/generate", async (req, res) => {
 
     <div class="card">
       <h2>🎬 ${d.Title}</h2>
-      <img src="${d.Poster}" />
+      <img src="${poster}" />
       <p>⭐ ${d.imdbRating}</p>
       <p>${d.Plot}</p>
 
