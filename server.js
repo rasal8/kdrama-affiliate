@@ -172,7 +172,7 @@ app.get("/outfit", (req, res) => {
 
   console.log("🔥 Outfit:", drama, "→", keyword);
 
-  const link = `https://www.amazon.in/s?k=${encodeURIComponent(keyword)}&tag=yourtag-21`;
+  const link = `https://www.amazon.in/s?k=${encodeURIComponent(keyword)}&tag=rrasal-21&linkCode=ll1`;
 
   res.redirect(link);
 });
