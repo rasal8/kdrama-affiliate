@@ -1,6 +1,11 @@
 const express = require("express");
 const app = express();
 
+const TelegramBot = require("node-telegram-bot-api");
+
+const bot = new TelegramBot(process.env.8657422651:AAHGOFjHCnisg_J97ZFk6VuFZ1fGtwCRF90, {
+  polling: true,
+});
 const PORT = process.env.PORT || 3000;
 
 // ✅ ROOT FIX
