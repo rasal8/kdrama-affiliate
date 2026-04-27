@@ -97,7 +97,11 @@ if (map[searchName]) {
       return res.send("❌ No result found");
     }
 
-    let results = searchRes.data.Search;
+    const data = searchRes.data;
+
+if (data.Response === "False") {
+  return res.send("❌ No result found");
+}
 
     // ✅ filter
     const filtered = results.filter(r =>
