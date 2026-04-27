@@ -87,6 +87,9 @@ app.get("/generate", async (req, res) => {
     });
 
     const d = detailRes.data;
+    const poster = d.Poster !== "N/A"
+  ? d.Poster
+  : "https://via.placeholder.com/300x450?text=No+Image";
 
     res.send(`
   <html>
