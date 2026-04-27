@@ -13,6 +13,23 @@ app.get("/test", (req, res) => {
   res.json({ status: "working" });
 });
 const axios = require("axios");
+function getOutfitKeyword(drama){
+  const d = drama.toLowerCase();
+
+  if(d.includes("goblin") || d.includes("guardian"))
+    return "korean winter coat men women";
+
+  if(d.includes("business"))
+    return "korean office outfit women blazer";
+
+  if(d.includes("love") || d.includes("romance"))
+    return "korean date outfit women dress";
+
+  if(d.includes("school"))
+    return "korean school outfit women";
+
+  return "korean fashion outfit";
+}
 const map = {
   "goblin": "Guardian The Lonely and Great God",
   "business proposal": "A Business Proposal"
