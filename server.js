@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 3000;
 
 // ✅ ROOT FIX
 app.get("/", (req, res) => {
-  res.send("🔥 K-Drama Affiliate Server Running Successfully");
+  res.send(" K-Drama Affiliate Server Running Successfully");
 });
 
 // ✅ TEST ROUTE
@@ -153,7 +153,7 @@ app.get("/generate", async (req, res) => {
   margin: 10px;
   padding: 12px;
   background: #ff3c3c;
-  color: white;        /* 🔥 important */
+  color: white;        /*  important */
   font-weight: bold;
   text-decoration: none;
   border-radius: 6px;
@@ -169,9 +169,9 @@ app.get("/generate", async (req, res) => {
       <p>${d.Plot}</p>
 
       <h3>🛍 Shop Inspired</h3>
-      <a href="/outfit?name=${encodeURIComponent(d.Title)}" target="_blank" rel="noopener noreferrer">🔥 Korean Outfit</a>
+      <a href="/outfit?name=${encodeURIComponent(d.Title)}" target="_blank" rel="noopener noreferrer"> Korean Outfit</a>
 
-<a href="/accessories?name=${encodeURIComponent(d.Title)}" target="_blank" rel="noopener noreferrer">✨ Accessories</a>
+<a href="/accessories?name=${encodeURIComponent(d.Title)}" target="_blank" rel="noopener noreferrer"> Accessories</a>
     </div>
 
   </body>
