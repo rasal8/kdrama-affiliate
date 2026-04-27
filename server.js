@@ -270,7 +270,7 @@ app.get("/products", async (req, res) => {
           <img src="${p.img}">
           <h4>${p.title}</h4>
           <p>${p.price}</p>
-          <a href="${p.link}" target="_blank">Buy Now</a>
+          <a href="${p.link}" target="_blank" rel="noopener noreferrer">Buy Now</a>
         </div>
       `).join("")}
     </div>
