@@ -292,3 +292,19 @@ app.get("/products", async (req, res) => {
 app.listen(PORT, () => {
   console.log("Server running on " + PORT);
 });
+
+bot.on("message", async (msg) => {
+  if (!msg.text || msg.chat.type !== "private") return;
+
+  const text = msg.text;
+
+  const response = `
+🎬 ${text}
+⭐ Rating: 8.5/10
+🎭 Genre: Romance, Drama
+
+👉 Download: LINK_HERE
+  `;
+
+  await bot.sendMessage(process.env.1003813050250, response);
+});
