@@ -78,9 +78,11 @@ app.get("/generate", async (req, res) => {
   if (!drama) return res.send("❌ Enter drama name");
 
   // ✅ manual mapping
-  if (map[drama.toLowerCase()]) {
-    drama = map[drama.toLowerCase()];
-  }
+  let searchName = drama.toLowerCase().trim();
+
+if (map[searchName]) {
+  searchName = map[searchName];
+}
 
   try {
     const searchRes = await axios.get("https://www.omdbapi.com/", {
