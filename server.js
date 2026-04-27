@@ -38,8 +38,10 @@ function getOutfitKeyword(drama){
   return "korean fashion outfit";
 }
 const map = {
-  "goblin": "Guardian The Lonely and Great God",
-  "business proposal": "A Business Proposal"
+  "goblin": "Guardian: The Lonely and Great God",
+  "guardian": "Guardian: The Lonely and Great God",
+  "business proposal": "A Business Proposal",
+  "true beauty": "True Beauty"
 };
 
 
