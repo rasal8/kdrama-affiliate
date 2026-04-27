@@ -109,7 +109,7 @@ if (map[searchName]) {
     // ✅ scoring
     const scored = results.map(item => ({
       ...item,
-      score: similarity(drama, item.Title)
+      score: similarity(searchName, item.Title)
     }));
 
     scored.sort((a, b) => b.score - a.score);
