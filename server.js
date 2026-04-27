@@ -131,8 +131,8 @@ app.get("/generate", async (req, res) => {
       <p>${d.Plot}</p>
 
       <h3>🛍 Shop Inspired</h3>
-      <a href="https://www.amazon.in/s?k=${drama}+outfit">Korean Outfit</a>
-      <a href="https://www.amazon.in/s?k=${drama}+accessories">Accessories</a>
+      <a href="https://www.amazon.in/s?k=${drama}+outfit&tag=yourtag-21">
+<a href="https://www.amazon.in/s?k=${drama}+accessories&tag=yourtag-21">
     </div>
 
   </body>
