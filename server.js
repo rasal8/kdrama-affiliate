@@ -115,14 +115,15 @@ app.get("/generate", async (req, res) => {
         border-radius: 10px;
       }
       a {
-        display: block;
-        margin: 10px;
-        padding: 10px;
-        background: #ff3c3c;
-        color: white;
-        text-decoration: none;
-        border-radius: 6px;
-      }
+  display: block;
+  margin: 10px;
+  padding: 12px;
+  background: #ff3c3c;
+  color: white;        /* 🔥 important */
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 6px;
+                                       }
     </style>
   </head>
   <body>
