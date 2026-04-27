@@ -166,6 +166,17 @@ app.get("/generate", async (req, res) => {
     res.send("⚠️ Error");
   }
 });
+app.get("/outfit", (req, res) => {
+  const drama = req.query.name;
+
+  const keyword = getOutfitKeyword(drama);
+
+  console.log("🔥 Outfit:", drama, "→", keyword);
+
+  const link = `https://www.amazon.in/s?k=${encodeURIComponent(keyword)}&tag=yourtag-21`;
+
+  res.redirect(link);
+});
 app.listen(PORT, () => {
   console.log("Server running on " + PORT);
 });
