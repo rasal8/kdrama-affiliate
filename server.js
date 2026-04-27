@@ -211,29 +211,29 @@ app.get("/products", async (req, res) => {
 
   const query = outfit + " " + accessories;
 
-  // 🔥 Fake “top products” using keyword blocks
+  //  Fake “top products” using keyword blocks
   // (simple version without scraping/API)
 
   const products = [
-    {
-      title: "Korean Winter Coat",
-      img: "https://i.imgur.com/8Km9tLL.jpg",
-      price: "₹1,499",
-      link: `https://www.amazon.in/s?k=${encodeURIComponent(outfit)}&tag=rrasal-21`
-    },
-    {
-      title: "Korean Scarf & Gloves",
-      img: "https://i.imgur.com/3ZQ3Z6Q.jpg",
-      price: "₹499",
-      link: `https://www.amazon.in/s?k=${encodeURIComponent(accessories)}&tag=rrasal-21`
-    },
-    {
-      title: "Korean Accessories Set",
-      img: "https://i.imgur.com/UYiroys.jpg",
-      price: "₹599",
-      link: `https://www.amazon.in/s?k=${encodeURIComponent(accessories + " set")}&tag=rrasal-21`
-    }
-  ];
+  {
+    title: "Korean Winter Coat",
+    img: "https://i.imgur.com/8Km9tLL.jpg",
+    price: "₹1,499",
+    link: `https://www.amazon.in/s?k=${encodeURIComponent(outfit)}&tag=rrasal-21&linkCode=ll1`
+  },
+  {
+    title: "Korean Scarf & Gloves",
+    img: "https://i.imgur.com/3ZQ3Z6Q.jpg",
+    price: "₹499",
+    link: `https://www.amazon.in/s?k=${encodeURIComponent(accessories)}&tag=rrasal-21&linkCode=ll1`
+  },
+  {
+    title: "Korean Accessories Set",
+    img: "https://i.imgur.com/UYiroys.jpg",
+    price: "₹599",
+    link: `https://www.amazon.in/s?k=${encodeURIComponent(accessories + " set")}&tag=rrasal-21&linkCode=ll1`
+  }
+];
 
   res.send(`
   <html>
