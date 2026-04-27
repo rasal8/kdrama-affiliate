@@ -308,5 +308,5 @@ bot.on("message", async (msg) => {
 👉 Download: LINK_HERE
   `;
 
-  await bot.sendMessage(process.env.-1003813050250, response);
+  await bot.sendMessage(process.env.CHANNEL_ID, response);
 });
