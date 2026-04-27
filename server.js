@@ -49,16 +49,19 @@ function similarity(a, b) {
 function getAccessoryKeyword(drama) {
   const d = drama.toLowerCase();
 
+  if (d.includes("goblin") || d.includes("guardian"))
+    return "korean winter accessories women scarf gloves beanie";
+
   if (d.includes("business"))
-    return "korean office accessories women";
+    return "korean office accessories women watch handbag";
+
+  if (d.includes("love") || d.includes("romance"))
+    return "korean date accessories women necklace earrings";
 
   if (d.includes("school"))
-    return "korean cute accessories women";
+    return "korean cute accessories women hair clips backpack";
 
-  if (d.includes("goblin") || d.includes("guardian"))
-    return "korean winter accessories scarf gloves";
-
-  return "korean fashion accessories women";
+  return "korean fashion accessories women stylish";
 }
 app.get("/generate", async (req, res) => {
   let drama = req.query.name;
