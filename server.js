@@ -168,7 +168,7 @@ app.get("/generate", async (req, res) => {
 app.get("/outfit", (req, res) => {
   const drama = req.query.name;
 
-  const keyword = getOutfitKeyword(drama);
+  const keyword = getOutfitKeyword(drama) || `${drama} korean outfit`;
 
   console.log("🔥 Outfit:", drama, "→", keyword);
 
