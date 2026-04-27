@@ -295,7 +295,6 @@ app.listen(PORT, () => {
   console.log("Server running on " + PORT);
 });
 
-const axios = require("axios");
 
 bot.on("message", async (msg) => {
   if (!msg.text || msg.chat.type !== "private") return;
