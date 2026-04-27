@@ -1,13 +1,15 @@
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 
 const TelegramBot = require("node-telegram-bot-api");
 
-const bot = new TelegramBot(process.env.8657422651:AAHGOFjHCnisg_J97ZFk6VuFZ1fGtwCRF90, {
-  polling: true,
+const bot = new TelegramBot(process.env.BOT_TOKEN, {
+  polling: true
 });
-const PORT = process.env.PORT || 3000;
 
+const PORT = process.env.PORT || 3000;
 // ✅ ROOT FIX
 app.get("/", (req, res) => {
   res.send(" K-Drama Affiliate Server Running Successfully");
