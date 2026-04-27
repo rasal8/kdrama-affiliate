@@ -203,6 +203,82 @@ app.get("/accessories", (req, res) => {
 
   res.redirect(link);
 });
+app.get("/products", async (req, res) => {
+  const drama = req.query.name;
+
+  const outfit = getOutfitKeyword(drama);
+  const accessories = getAccessoryKeyword(drama);
+
+  const query = outfit + " " + accessories;
+
+  // 🔥 Fake “top products” using keyword blocks
+  // (simple version without scraping/API)
+
+  const products = [
+    {
+      title: "Korean Winter Coat",
+      img: "https://i.imgur.com/8Km9tLL.jpg",
+      price: "₹1,499",
+      link: `https://www.amazon.in/s?k=${encodeURIComponent(outfit)}&tag=rrasal-21`
+    },
+    {
+      title: "Korean Scarf & Gloves",
+      img: "https://i.imgur.com/3ZQ3Z6Q.jpg",
+      price: "₹499",
+      link: `https://www.amazon.in/s?k=${encodeURIComponent(accessories)}&tag=rrasal-21`
+    },
+    {
+      title: "Korean Accessories Set",
+      img: "https://i.imgur.com/UYiroys.jpg",
+      price: "₹599",
+      link: `https://www.amazon.in/s?k=${encodeURIComponent(accessories + " set")}&tag=rrasal-21`
+    }
+  ];
+
+  res.send(`
+  <html>
+  <head>
+    <title>Shop ${drama}</title>
+    <style>
+      body { background:#111; color:#fff; font-family:Arial; text-align:center; }
+      .grid { display:flex; flex-wrap:wrap; justify-content:center; gap:15px; }
+      .card {
+        background:#1c1c1c;
+        padding:15px;
+        border-radius:10px;
+        width:180px;
+      }
+      img { width:100%; border-radius:10px; }
+      a {
+        display:block;
+        margin-top:10px;
+        padding:10px;
+        background:#ff3c3c;
+        color:white;
+        text-decoration:none;
+        border-radius:6px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <h2>🛍 Shop Inspired by ${drama}</h2>
+
+    <div class="grid">
+      ${products.map(p => `
+        <div class="card">
+          <img src="${p.img}">
+          <h4>${p.title}</h4>
+          <p>${p.price}</p>
+          <a href="${p.link}" target="_blank">Buy Now</a>
+        </div>
+      `).join("")}
+    </div>
+
+  </body>
+  </html>
+  `);
+});
 app.listen(PORT, () => {
   console.log("Server running on " + PORT);
 });
