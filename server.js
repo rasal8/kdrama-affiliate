@@ -356,8 +356,11 @@ const accessoryLink = getAmazonLink(accessoryKeyword);
   reply_markup: {
     inline_keyboard: [
       [
-        { text: "🛍 Outfit", url: outfitLink },
-        { text: "👜 Accessories", url: accessoryLink }
+        { text: "🔥 Hoodie", url: products[0].link },
+        { text: "🧥 Jacket", url: products[2].link }
+      ],
+      [
+        { text: "🛍 View More", url: outfitLink }
       ],
       [
         { text: "🎬 Watch / Download", url: "https://your-link.com" }
