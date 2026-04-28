@@ -389,16 +389,24 @@ bot.on("message", async (msg) => {
     });
 
     const d = r.data;
-    const outfitKeyword = getOutfitKeyword(drama);
-const accessoryKeyword = getAccessoryKeyword(drama);
 
+// 1. Keyword (drama + genre)
+const outfitKeyword = getOutfitKeyword(drama, d.Genre);
+
+// 2. Link
 const outfitLink = getAmazonLink(outfitKeyword);
-const accessoryLink = getAmazonLink(accessoryKeyword);
-    const products = await getTopProducts(outfitKeyword);
-    const safeProducts = [
-  products?.[0] || { link: outfitLink },
-  products?.[1] || { link: outfitLink },
-  products?.[2] || { link: outfitLink }
+
+// 3. Products (await + fallback)
+const rawProducts = await getTopProducts(outfitKeyword) || [];
+
+// 4. Shuffle (same feel hatao)
+const products = shuffle(rawProducts);
+
+// 5. Safe products (LAST me)
+const safeProducts = [
+  products[0] || { link: outfitLink },
+  products[1] || { link: outfitLink },
+  products[2] || { link: outfitLink }
 ];
 
     const caption = `
