@@ -349,17 +349,31 @@ const accessoryLink = getAmazonLink(accessoryKeyword);
 
 👉 Download: LINK_HERE
 
-🛍 Outfit: ${outfitLink}
-👜 Accessories: ${accessoryLink}
+
 `;
 
-    if (d.Poster && d.Poster !== "N/A") {
-      await bot.sendPhoto(process.env.CHANNEL_ID, d.Poster, {
-        caption
-      });
-    } else {
-      await bot.sendMessage(process.env.CHANNEL_ID, caption);
-    }
+    const buttons = {
+  reply_markup: {
+    inline_keyboard: [
+      [
+        { text: "🛍 Outfit", url: outfitLink },
+        { text: "👜 Accessories", url: accessoryLink }
+      ],
+      [
+        { text: "🎬 Watch / Download", url: "https://your-link.com" }
+      ]
+    ]
+  }
+};
+
+if (d.Poster && d.Poster !== "N/A") {
+  await bot.sendPhoto(process.env.CHANNEL_ID, d.Poster, {
+    caption,
+    ...buttons
+  });
+} else {
+  await bot.sendMessage(process.env.CHANNEL_ID, caption, buttons);
+}
 
   } catch (err) {
     console.log(err);
