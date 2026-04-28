@@ -347,7 +347,6 @@ const accessoryLink = getAmazonLink(accessoryKeyword);
 ⭐ Rating: ${d.imdbRating || "8.5"}/10
 🎭 ${d.Genre || "Romance, Drama"}
 
-👉 Download: LINK_HERE
 
 
 `;
