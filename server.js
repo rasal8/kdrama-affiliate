@@ -357,7 +357,10 @@ const accessoryLink = getAmazonLink(accessoryKeyword);
     inline_keyboard: [
       [
         { text: "🔥 Hoodie", url: products[0].link },
-        { text: "🧥 Jacket", url: products[2].link }
+        { text: "🧥 Jacket", url: products[1].link }
+      ],
+      [
+        { text: "👗 Dress", url: products[2].link }
       ],
       [
         { text: "🛍 View More", url: outfitLink }
