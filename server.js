@@ -55,7 +55,6 @@ function getAmazonLink(keyword) {
       link: getAmazonLink(keyword + " korean handbag stylish")
     }
   ];
-  }
 }
 function getOutfitKeyword(drama){
   const d = drama.toLowerCase();
