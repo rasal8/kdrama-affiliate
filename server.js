@@ -29,6 +29,14 @@ app.get("/test", (req, res) => {
   res.json({ status: "working" });
 });
 const axios = require("axios");
+function getAmazonLink(keyword) {
+  const base = "https://www.amazon.in/s";
+  const params = new URLSearchParams({
+    k: keyword,
+    tag: process.env.AMAZON_TAG // affiliate id
+  });
+  return `${base}?${params.toString()}`;
+}
 function getOutfitKeyword(drama){
   const d = drama.toLowerCase();
 
