@@ -385,15 +385,18 @@ const accessoryLink = getAmazonLink(accessoryKeyword);
     const buttons = {
   reply_markup: {
     inline_keyboard: [
-      [
-        { text: "🔥 Lead Coat", url: safeProducts[0].link },
-{ text: "💖 Dress Look", url: safeProducts[1].link },
-{ text: "✨ Soft Sweater", url: safeProducts[2].link },
-{ text: "🛍️ Full Outfit", url: outfitLink }
-      ],
-      [
-  
-      ]
+  [
+    { text: "🔥 Lead Coat", url: safeProducts[0].link },
+    { text: "💖 Dress Look", url: safeProducts[1].link }
+  ],
+  [
+    { text: "✨ Soft Sweater", url: safeProducts[2].link }
+  ],
+  [
+    { text: "🛍️ Full Outfit", url: outfitLink }
+  ]
+]
+      
     ]
   }
 };
