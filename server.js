@@ -413,9 +413,10 @@ const safeProducts = [
 ✨ Inspired by ${d.Title || drama}
 
 ⭐ ${d.imdbRating || "8.5"}/10 | Korean Aesthetic  
-🎭 Vibe: Soft • Cozy • Romantic  
+🎭 Vibe: ${d.Genre || "Romance, Drama"}
 
 💫 Steal Her Look 👇
+💡 Style Match: ${outfitKeyword}
 `;
 
     const buttons = {
