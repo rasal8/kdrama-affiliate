@@ -345,6 +345,34 @@ app.get("/products", async (req, res) => {
 app.listen(PORT, () => {
   console.log("Server running on " + PORT);
 });
+function getOutfitKeyword(drama, genre = "") {
+  const d = (drama || "").toLowerCase();
+  const g = (genre || "").toLowerCase();
+
+  if (d.includes("doctor") || d.includes("hospital"))
+    return "korean doctor coat outfit";
+
+  if (d.includes("business") || d.includes("office"))
+    return "korean office blazer outfit";
+
+  if (d.includes("school") || d.includes("college"))
+    return "korean school uniform outfit";
+
+  if (g.includes("romance"))
+    return "korean romantic date outfit dress";
+
+  if (g.includes("action"))
+    return "korean street style outfit men";
+
+  if (g.includes("fantasy"))
+    return "korean winter coat aesthetic";
+
+  return `${drama} korean outfit style`;
+}
+
+function shuffle(arr = []) {
+  return arr.sort(() => 0.5 - Math.random());
+}
 
 
 bot.on("message", async (msg) => {
