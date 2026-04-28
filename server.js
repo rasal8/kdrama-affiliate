@@ -393,22 +393,17 @@ bot.on("message", async (msg) => {
 // 1. Keyword (drama + genre)
 const outfitKeyword = getOutfitKeyword(drama, d.Genre);
 
-// 2. Link
 const outfitLink = getAmazonLink(outfitKeyword);
 
-// 3. Products (await + fallback)
 const rawProducts = await getTopProducts(outfitKeyword) || [];
 
-// 4. Shuffle (same feel hatao)
-const products = shuffle(rawProducts);
+const products = [...rawProducts].sort(() => 0.5 - Math.random());
 
-// 5. Safe products (LAST me)
 const safeProducts = [
-  products[0] || { link: outfitLink },
-  products[1] || { link: outfitLink },
-  products[2] || { link: outfitLink }
+  products?.[0] || { link: outfitLink },
+  products?.[1] || { link: outfitLink },
+  products?.[2] || { link: outfitLink }
 ];
-
     const caption = `
 ✨ Inspired by ${d.Title || drama}
 
