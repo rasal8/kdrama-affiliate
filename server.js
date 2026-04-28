@@ -336,6 +336,11 @@ bot.on("message", async (msg) => {
     });
 
     const d = r.data;
+    const outfitKeyword = getOutfitKeyword(drama);
+const accessoryKeyword = getAccessoryKeyword(drama);
+
+const outfitLink = getAmazonLink(outfitKeyword);
+const accessoryLink = getAmazonLink(accessoryKeyword);
 
     const caption = `
 🎬 ${d.Title || drama}
