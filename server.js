@@ -31,11 +31,17 @@ app.get("/test", (req, res) => {
 const axios = require("axios");
 function getAmazonLink(keyword) {
   const base = "https://www.amazon.in/s";
+
   const params = new URLSearchParams({
-    k: keyword,
-    tag: process.env.AMAZON_TAG // affiliate id
+    k: keyword
   });
+
+  if (process.env.AMAZON_TAG) {
+    params.append("tag", process.env.AMAZON_TAG);
+  }
+
   return `${base}?${params.toString()}`;
+}
   function getTopProducts(keyword) {
   return [
     {
