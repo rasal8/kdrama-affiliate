@@ -369,29 +369,25 @@ const accessoryLink = getAmazonLink(accessoryKeyword);
     const products = getTopProducts(outfitKeyword);
 
     const caption = `
-🎬 ${d.Title || drama}
-⭐ Rating: ${d.imdbRating || "8.5"}/10
-🎭 ${d.Genre || "Romance, Drama"}
+✨ Inspired by ${d.Title || drama}
 
+⭐ ${d.imdbRating || "8.5"}/10 | Korean Aesthetic  
+🎭 Vibe: Soft • Cozy • Romantic  
 
-
+💫 Looks Inspired from this Drama
 `;
 
     const buttons = {
   reply_markup: {
     inline_keyboard: [
       [
-        { text: "🔥 Hoodie", url: products[0].link },
-        { text: "🧥 Jacket", url: products[1].link }
+        { text: "🔥 Get Lead Style Coat", url: products[0].link },
+{ text: "💖 Inspired Dress Look", url: products[1].link },
+{ text: "✨ Korean Soft Sweater", url: products[2].link },
+{ text: "🛍️ Explore Full Look", url: outfitLink }
       ],
       [
-        { text: "👗 Dress", url: products[2].link }
-      ],
-      [
-        { text: "🛍 View More", url: outfitLink }
-      ],
-      [
-        { text: "🎬 Watch / Download", url: "https://your-link.com" }
+  
       ]
     ]
   }
