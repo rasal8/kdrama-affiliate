@@ -36,6 +36,26 @@ function getAmazonLink(keyword) {
     tag: process.env.AMAZON_TAG // affiliate id
   });
   return `${base}?${params.toString()}`;
+  function getTopProducts(keyword) {
+  return [
+    {
+      title: "🔥 Korean Oversized Hoodie",
+      link: getAmazonLink(keyword + " oversized hoodie")
+    },
+    {
+      title: "🧥 Korean Aesthetic Jacket",
+      link: getAmazonLink(keyword + " jacket men women")
+    },
+    {
+      title: "👗 Korean Style Dress",
+      link: getAmazonLink(keyword + " korean dress women")
+    },
+    {
+      title: "👜 Korean Handbag",
+      link: getAmazonLink(keyword + " korean handbag stylish")
+    }
+  ];
+  }
 }
 function getOutfitKeyword(drama){
   const d = drama.toLowerCase();
