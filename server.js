@@ -341,7 +341,7 @@ const accessoryKeyword = getAccessoryKeyword(drama);
 
 const outfitLink = getAmazonLink(outfitKeyword);
 const accessoryLink = getAmazonLink(accessoryKeyword);
-    const products = getTopProducts(Keyword);
+    const products = getTopProducts(outfitKeyword);
 
     const caption = `
 🎬 ${d.Title || drama}
