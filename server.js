@@ -348,6 +348,9 @@ const accessoryLink = getAmazonLink(accessoryKeyword);
 🎭 ${d.Genre || "Romance, Drama"}
 
 👉 Download: LINK_HERE
+
+🛍 Outfit: ${outfitLink}
+👜 Accessories: ${accessoryLink}
 `;
 
     if (d.Poster && d.Poster !== "N/A") {
