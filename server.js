@@ -374,7 +374,7 @@ const accessoryLink = getAmazonLink(accessoryKeyword);
 ⭐ ${d.imdbRating || "8.5"}/10 | Korean Aesthetic  
 🎭 Vibe: Soft • Cozy • Romantic  
 
-💫 Looks Inspired from this Drama
+💫 Steal Her Look 👇
 `;
 
     const buttons = {
