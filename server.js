@@ -367,6 +367,11 @@ const accessoryKeyword = getAccessoryKeyword(drama);
 const outfitLink = getAmazonLink(outfitKeyword);
 const accessoryLink = getAmazonLink(accessoryKeyword);
     const products = getTopProducts(outfitKeyword);
+    const safeProducts = [
+  products?.[0] || { link: outfitLink },
+  products?.[1] || { link: outfitLink },
+  products?.[2] || { link: outfitLink }
+];
 
     const caption = `
 ✨ Inspired by ${d.Title || drama}
