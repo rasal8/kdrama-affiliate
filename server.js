@@ -403,6 +403,11 @@ if (d.Poster && d.Poster !== "N/A") {
 
   } catch (err) {
     console.log(err);
-    await bot.sendMessage(process.env.CHANNEL_ID, `❌ Error fetching data`);
+    console.log("FULL ERROR:", err.response?.data || err.message);
+
+await bot.sendMessage(
+  process.env.CHANNEL_ID,
+  `❌ Error: ${err.message}`
+);
   }
 });
