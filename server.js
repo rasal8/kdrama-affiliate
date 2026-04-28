@@ -341,22 +341,7 @@ const accessoryKeyword = getAccessoryKeyword(drama);
 
 const outfitLink = getAmazonLink(outfitKeyword);
 const accessoryLink = getAmazonLink(accessoryKeyword);
-    function getTopProducts(keyword) {
-  return [
-    {
-      title: "Korean Style Oversized Hoodie",
-      link: getAmazonLink(keyword + " hoodie"),
-    },
-    {
-      title: "Korean Aesthetic Sweater",
-      link: getAmazonLink(keyword + " sweater"),
-    },
-    {
-      title: "Korean Fashion Jacket",
-      link: getAmazonLink(keyword + " jacket"),
-    }
-  ];
-    }
+    const products = getTopProducts(outfitKeyword);
 
     const caption = `
 🎬 ${d.Title || drama}
