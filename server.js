@@ -381,10 +381,10 @@ const accessoryLink = getAmazonLink(accessoryKeyword);
   reply_markup: {
     inline_keyboard: [
       [
-        { text: "🔥 Get Lead Style Coat", url: products[0].link },
-{ text: "💖 Inspired Dress Look", url: products[1].link },
-{ text: "✨ Korean Soft Sweater", url: products[2].link },
-{ text: "🛍️ Explore Full Look", url: outfitLink }
+        { text: "🔥 Lead Coat", url: safeProducts[0].link },
+{ text: "💖 Dress Look", url: safeProducts[1].link },
+{ text: "✨ Soft Sweater", url: safeProducts[2].link },
+{ text: "🛍️ Full Outfit", url: outfitLink }
       ],
       [
   
