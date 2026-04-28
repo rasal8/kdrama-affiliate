@@ -396,8 +396,6 @@ const accessoryLink = getAmazonLink(accessoryKeyword);
     { text: "🛍️ Full Outfit", url: outfitLink }
   ]
 ]
-      
-    ]
   }
 };
 
