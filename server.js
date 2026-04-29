@@ -83,6 +83,7 @@ async function searchAmazon(keywords){
     SearchIndex: "Fashion",
     PartnerTag: PARTNER_TAG,
     PartnerType: "Associates",
+    Marketplace: "www.amazon.in",
     Resources: [
       "Images.Primary.Medium",
       "ItemInfo.Title",
