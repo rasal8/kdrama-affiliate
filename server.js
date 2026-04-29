@@ -102,7 +102,7 @@ async function searchAmazon(keywords){
     "x-amz-target:com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems\n";
 
   const signedHeaders =
-    "content-encoding;content-type;host;x-amz-date;x-amz-target";
+    "content-type;host;x-amz-date;x-amz-target";
 
   const canonicalRequest =
     "POST\n" +
