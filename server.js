@@ -468,12 +468,10 @@ const intent = detectIntent(outfitKeyword);
 const items = await searchAmazon(intent);
 const products = pickBest(items);
 
-const products = [...rawProducts].sort(() => 0.5 - Math.random());
-
 const safeProducts = [
-  products?.[0] || { link: outfitLink },
-  products?.[1] || { link: outfitLink },
-  products?.[2] || { link: outfitLink }
+  products?.[0],
+  products?.[1],
+  products?.[2]
 ];
     const caption = `
 ✨ Inspired by ${d.Title || drama}
