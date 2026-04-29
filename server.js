@@ -429,8 +429,11 @@ app.get("/drama-products", async (req, res) => {
 
     res.json(best);
   } catch (e) {
-    console.log("ERROR:", e.response?.data || e.message);
-    res.status(500).json({ error: "Amazon fetch failed" });
+  console.log("STATUS:", e.response?.status);
+  console.log("DATA:", JSON.stringify(e.response?.data, null, 2));
+  console.log("MSG:", e.message);
+
+  res.status(500).json({ error: "Amazon fetch failed" });
   }
 });
 app.listen(PORT, () => {
