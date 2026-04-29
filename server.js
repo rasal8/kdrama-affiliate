@@ -102,15 +102,13 @@ async function searchAmazon(keywords){
     "x-amz-target:com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems\n";
   const signedHeaders =
     "content-type;host;x-amz-date;x-amz-target";
-
-  const canonicalRequest =
-    "POST\n" +
-    "/paapi5/searchitems\n" +
-    "\n" +
-    canonicalHeaders +
-    signedHeaders + "\n" +
-    require("crypto").createHash("sha256").update(payload).digest("hex");
-
+    const canonicalRequest =
+  "POST\n" +
+  "/paapi5/searchitems\n" +
+  "\n" +
+  canonicalHeaders + "\n" +   // ✅ ye newline missing thi
+  signedHeaders + "\n" +
+  require("crypto").createHash("sha256").update(payload).digest("hex");
   const stringToSign =
     "AWS4-HMAC-SHA256\n" +
     amzdate + "\n" +
@@ -129,7 +127,6 @@ async function searchAmazon(keywords){
 
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
-    "Content-Encoding": "amz-1.0",
     "X-Amz-Date": amzdate,
     "X-Amz-Target": "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems",
     "Authorization": authorizationHeader,
