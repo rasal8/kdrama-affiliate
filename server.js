@@ -418,6 +418,21 @@ app.get("/products", async (req, res) => {
   </html>
   `);
 });
+app.get("/drama-products", async (req, res) => {
+  try {
+    const drama = req.query.drama || "";
+    const scene = req.query.scene || "";
+
+    const keywords = detectIntent(drama + " " + scene);
+    const items = await searchAmazon(keywords);
+    const best = pickBest(items);
+
+    res.json(best);
+  } catch (e) {
+    console.log("ERROR:", e.response?.data || e.message);
+    res.status(500).json({ error: "Amazon fetch failed" });
+  }
+});
 app.listen(PORT, () => {
   console.log("Server running on " + PORT);
 });
