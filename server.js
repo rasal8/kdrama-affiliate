@@ -96,7 +96,6 @@ async function searchAmazon(keywords){
   const datestamp = amzdate.slice(0,8);
 
   const canonicalHeaders =
-    "content-encoding:amz-1.0\n" +
     "content-type:application/json; charset=utf-8\n" +
     "host:" + HOST + "\n" +
     "x-amz-date:" + amzdate + "\n" +
