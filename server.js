@@ -124,6 +124,7 @@ async function searchAmazon(keywords){
 
   const authorizationHeader =
   `AWS4-HMAC-SHA256 Credential=${ACCESS_KEY}/${datestamp}/${REGION}/${SERVICE}/aws4_request, SignedHeaders=${signedHeaders}, Signature=${signature}`;
+  
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
     "X-Amz-Date": amzdate,
