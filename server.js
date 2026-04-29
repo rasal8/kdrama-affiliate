@@ -95,10 +95,12 @@ async function searchAmazon(keywords){
   const signedHeaders = "content-encoding;content-type;host;x-amz-date;x-amz-target";
 
   const canonicalRequest =
-    "POST\n/paapi5/searchitems\n\n" +
-    canonicalHeaders + "\n" +
-    signedHeaders + "\n" +
-    hash(body);
+  "POST\n" +
+  "/paapi5/searchitems\n" +
+  "\n" +
+  canonicalHeaders + "\n" +
+  signedHeaders + "\n" +
+  hash(body);
 
   const stringToSign =
     "AWS4-HMAC-SHA256\n" +
