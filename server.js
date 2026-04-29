@@ -114,12 +114,13 @@ async function searchAmazon(keywords){
   const signature = crypto.createHmac("sha256", signingKey).update(stringToSign).digest("hex");
 
   const headers = {
-    "Content-Type": "application/json; charset=utf-8",
-    "Content-Encoding": "amz-1.0",
-    "X-Amz-Date": amzdate,
-    "X-Amz-Target": "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems",
-    "Authorization": `AWS4-HMAC-SHA256 Credential=${ACCESS_KEY}/${datestamp}/${REGION}/${SERVICE}/aws4_request, SignedHeaders=${signedHeaders}, Signature=${signature}`
-  };
+  "Content-Type": "application/json; charset=utf-8",
+  "Content-Encoding": "amz-1.0",
+  "X-Amz-Date": amzdate,
+  "X-Amz-Target": "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems",
+  "Authorization": `AWS4-HMAC-SHA256 Credential=${ACCESS_KEY}/${datestamp}/${REGION}/${SERVICE}/aws4_request, SignedHeaders=${signedHeaders}, Signature=${signature}`,
+  "Host": HOST
+};
 
   const res = await axios.post(ENDPOINT, body, { headers });
 
