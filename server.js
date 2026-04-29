@@ -100,7 +100,6 @@ async function searchAmazon(keywords){
     "host:" + HOST + "\n" +
     "x-amz-date:" + amzdate + "\n" +
     "x-amz-target:com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems\n";
-
   const signedHeaders =
     "content-type;host;x-amz-date;x-amz-target";
 
