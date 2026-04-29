@@ -5,26 +5,18 @@ const app = express();
 
 const TelegramBot = require("node-telegram-bot-api");
 
-let bot;
-
-if (!global.telegramBot) {
-  bot = new TelegramBot(process.env.BOT_TOKEN, {
-    polling: {
-      autoStart: false
+const bot = new TelegramBot(process.env.BOT_TOKEN, {
+  polling: {
+    interval: 300,
+    autoStart: true,
+    params: {
+      timeout: 10
     }
-  });
-
-  bot.startPolling();
-
-  global.telegramBot = bot;
-
-  bot.on("polling_error", (error) => {
-    console.log("Polling error:", error.message);
-  });
-
-} else {
-  bot = global.telegramBot;
-}
+  }
+});
+bot.on("polling_error", (error) => {
+  console.log("Polling error:", error.message);
+});
 
 const PORT = process.env.PORT || 3000;
 // ✅ ROOT FIX
@@ -37,118 +29,39 @@ app.get("/test", (req, res) => {
   res.json({ status: "working" });
 });
 const axios = require("axios");
-// 🔥 AMAZON API CONFIG
-const crypto = require("crypto");
+function getAmazonLink(keyword) {
+  const base = "https://www.amazon.in/s";
 
-const ACCESS_KEY = process.env.ACCESS_KEY;
-const SECRET_KEY = process.env.SECRET_KEY;
-const PARTNER_TAG = process.env.PARTNER_TAG;
-
-const HOST = "webservices.amazon.in";
-const REGION = "eu-west-1";
-const SERVICE = "ProductAdvertisingAPI";
-const ENDPOINT = "https://webservices.amazon.in/paapi5/searchitems";
-
-// ---------- intent ----------
-function detectIntent(text){
-  const t = (text || "").toLowerCase();
-
-  if(t.includes("business") || t.includes("office"))
-    return "korean office blazer women";
-
-  if(t.includes("school"))
-    return "korean college outfit women";
-
-  if(t.includes("winter") || t.includes("coat"))
-    return "korean wool coat women";
-
-  return "korean fashion outfit women";
-}
-
-// ---------- signing ----------
-function hmac(key, data){ return crypto.createHmac("sha256", key).update(data).digest(); }
-function hash(data){ return crypto.createHash("sha256").update(data).digest("hex"); }
-
-function getSignatureKey(key, dateStamp, regionName, serviceName){
-  const kDate = hmac("AWS4" + key, dateStamp);
-  const kRegion = hmac(kDate, regionName);
-  const kService = hmac(kRegion, serviceName);
-  return hmac(kService, "aws4_request");
-}
-
-// ---------- search ----------
-async function searchAmazon(keywords){
-  const payload = JSON.stringify({
-    Keywords: keywords,
-    SearchIndex: "Fashion",
-    PartnerTag: PARTNER_TAG,
-    PartnerType: "Associates",
-    Marketplace: "www.amazon.in",
-    Resources: [
-      "Images.Primary.Medium",
-      "ItemInfo.Title",
-      "Offers.Listings.Price",
-      "CustomerReviews.StarRating"
-    ]
+  const params = new URLSearchParams({
+    k: keyword
   });
 
-  const amzdate = new Date().toISOString().replace(/[:-]|\.\d{3}/g, "");
-  const datestamp = amzdate.slice(0,8);
-
-  const canonicalHeaders =
-    "content-type:application/json; charset=utf-8\n" +
-    "host:" + HOST + "\n" +
-    "x-amz-date:" + amzdate + "\n" +
-    "x-amz-target:com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems\n";
-  const signedHeaders =
-    "content-type;host;x-amz-date;x-amz-target";
-    const canonicalRequest =
-  "POST\n" +
-  "/paapi5/searchitems\n" +
-  "\n" +
-  canonicalHeaders + "\n" +   // ✅ ye newline missing thi
-  signedHeaders + "\n" +
-  require("crypto").createHash("sha256").update(payload).digest("hex");
-  const stringToSign =
-    "AWS4-HMAC-SHA256\n" +
-    amzdate + "\n" +
-    `${datestamp}/${REGION}/${SERVICE}/aws4_request\n` +
-    require("crypto").createHash("sha256").update(canonicalRequest).digest("hex");
-
-  const signingKey = getSignatureKey(SECRET_KEY, datestamp, REGION, SERVICE);
-
-  const signature = require("crypto")
-    .createHmac("sha256", signingKey)
-    .update(stringToSign)
-    .digest("hex");
-
-  const authorizationHeader =
-  `AWS4-HMAC-SHA256 Credential=${ACCESS_KEY}/${datestamp}/${REGION}/${SERVICE}/aws4_request, SignedHeaders=${signedHeaders}, Signature=${signature}`;
-  
-  const headers = {
-    "Content-Type": "application/json; charset=utf-8",
-    "X-Amz-Date": amzdate,
-    "X-Amz-Target": "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems",
-    "Authorization": authorizationHeader,
-    "Host": HOST
-  };
-
-  const res = await axios.post(ENDPOINT, payload, { headers });
-
-  return (res.data.SearchResult?.Items || []).map(it => ({
-    title: it.ItemInfo?.Title?.DisplayValue,
-    price: it.Offers?.Listings?.[0]?.Price?.DisplayAmount,
-    rating: it.CustomerReviews?.StarRating || 0,
-    link: it.DetailPageURL
-  }));
-                                                   }
-
-function pickBest(list){
-  return list
-    .filter(p => p.title && p.link)
-    .sort((a,b) => (b.rating||0) - (a.rating||0))
-    .slice(0,3);
+  if (process.env.AMAZON_TAG) {
+    params.append("tag", process.env.AMAZON_TAG);
   }
+
+  return `${base}?${params.toString()}`;
+}
+  function getTopProducts(keyword) {
+  return [
+    {
+      title: "🔥 Korean Oversized Hoodie",
+      link: getAmazonLink(keyword + " oversized hoodie")
+    },
+    {
+      title: "🧥 Korean Aesthetic Jacket",
+      link: getAmazonLink(keyword + " jacket men women")
+    },
+    {
+      title: "👗 Korean Style Dress",
+      link: getAmazonLink(keyword + " korean dress women")
+    },
+    {
+      title: "👜 Korean Handbag",
+      link: getAmazonLink(keyword + " korean handbag stylish")
+    }
+  ];
+}
 function getOutfitKeyword(drama){
   const d = drama.toLowerCase();
 
@@ -429,55 +342,9 @@ app.get("/products", async (req, res) => {
   </html>
   `);
 });
-app.get("/drama-products", async (req, res) => {
-  try {
-    const drama = req.query.drama || "";
-    const scene = req.query.scene || "";
-
-    const keywords = detectIntent(drama + " " + scene);
-    const items = await searchAmazon(keywords);
-    const best = pickBest(items);
-
-    res.json(best);
-  } catch (e) {
-  console.log("STATUS:", e.response?.status);
-  console.log("DATA:", JSON.stringify(e.response?.data, null, 2));
-  console.log("MSG:", e.message);
-
-  res.status(500).json({ error: "Amazon fetch failed" });
-  }
-});
 app.listen(PORT, () => {
   console.log("Server running on " + PORT);
 });
-function getOutfitKeyword(drama, genre = "") {
-  const d = (drama || "").toLowerCase();
-  const g = (genre || "").toLowerCase();
-
-  if (d.includes("doctor") || d.includes("hospital"))
-    return "korean doctor coat outfit";
-
-  if (d.includes("business") || d.includes("office"))
-    return "korean office blazer outfit";
-
-  if (d.includes("school") || d.includes("college"))
-    return "korean school uniform outfit";
-
-  if (g.includes("romance"))
-    return "korean romantic date outfit dress";
-
-  if (g.includes("action"))
-    return "korean street style outfit men";
-
-  if (g.includes("fantasy"))
-    return "korean winter coat aesthetic";
-
-  return `${drama} korean outfit style`;
-}
-
-function shuffle(arr = []) {
-  return arr.sort(() => 0.5 - Math.random());
-}
 
 
 bot.on("message", async (msg) => {
@@ -494,43 +361,41 @@ bot.on("message", async (msg) => {
     });
 
     const d = r.data;
+    const outfitKeyword = getOutfitKeyword(drama);
+const accessoryKeyword = getAccessoryKeyword(drama);
 
-// 1. Keyword (drama + genre)
-const outfitKeyword = getOutfitKeyword(drama, d.Genre);
-
-const intent = detectIntent(outfitKeyword);
-const items = await searchAmazon(intent);
-const products = pickBest(items);
-
-const safeProducts = [
-  products?.[0],
-  products?.[1],
-  products?.[2]
+const outfitLink = getAmazonLink(outfitKeyword);
+const accessoryLink = getAmazonLink(accessoryKeyword);
+    const products = await getTopProducts(outfitKeyword);
+    const safeProducts = [
+  products?.[0] || { link: outfitLink },
+  products?.[1] || { link: outfitLink },
+  products?.[2] || { link: outfitLink }
 ];
+
     const caption = `
 ✨ Inspired by ${d.Title || drama}
 
 ⭐ ${d.imdbRating || "8.5"}/10 | Korean Aesthetic  
-🎭 Vibe: ${d.Genre || "Romance, Drama"}
+🎭 Vibe: Soft • Cozy • Romantic  
 
 💫 Steal Her Look 👇
-💡 Style Match: ${outfitKeyword}
 `;
 
     const buttons = {
   reply_markup: {
     inline_keyboard: [
-      [
-        { text: "🔥 Lead Coat", url: safeProducts[0].link },
-        { text: "💖 Dress Look", url: safeProducts[1].link }
-      ],
-      [
-        { text: "✨ Soft Sweater", url: safeProducts[2].link }
-      ],
-      [
-        { text: "🛍 Full Outfit", url: safeProducts[0]?.link }
-      ]
-    ]
+  [
+    { text: "🔥 Lead Coat", url: safeProducts[0].link },
+    { text: "💖 Dress Look", url: safeProducts[1].link }
+  ],
+  [
+    { text: "✨ Soft Sweater", url: safeProducts[2].link }
+  ],
+  [
+    { text: "🛍️ Full Outfit", url: outfitLink }
+  ]
+]
   }
 };
 
@@ -553,3 +418,4 @@ await bot.sendMessage(
 );
   }
 });
+                                       
