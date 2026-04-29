@@ -88,8 +88,8 @@ async function searchAmazon(keywords){
   const canonicalHeaders =
     "content-encoding:amz-1.0\n" +
     "content-type:application/json; charset=utf-8\n" +
-    `host:${HOST}\n` +
-    `x-amz-date:${amzdate}\n` +
+    "host:" + HOST + "\n" +
+    "x-amz-date:" + amzdate + "\n" +
     `x-amz-target:com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems\n`;
 
   const signedHeaders = "content-encoding;content-type;host;x-amz-date;x-amz-target";
