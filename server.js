@@ -29,39 +29,110 @@ app.get("/test", (req, res) => {
   res.json({ status: "working" });
 });
 const axios = require("axios");
-function getAmazonLink(keyword) {
-  const base = "https://www.amazon.in/s";
+// 🔥 AMAZON API CONFIG
+const crypto = require("crypto");
 
-  const params = new URLSearchParams({
-    k: keyword
+const ACCESS_KEY = "YOUR_ACCESS_KEY";
+const SECRET_KEY = "YOUR_SECRET_KEY";
+const PARTNER_TAG = "yourtag-21";
+
+const HOST = "webservices.amazon.in";
+const REGION = "us-east-1";
+const SERVICE = "ProductAdvertisingAPI";
+const ENDPOINT = "https://webservices.amazon.in/paapi5/searchitems";
+
+// ---------- intent ----------
+function detectIntent(text){
+  const t = (text || "").toLowerCase();
+
+  if(t.includes("business") || t.includes("office"))
+    return "korean office blazer women";
+
+  if(t.includes("school"))
+    return "korean college outfit women";
+
+  if(t.includes("winter") || t.includes("coat"))
+    return "korean wool coat women";
+
+  return "korean fashion outfit women";
+}
+
+// ---------- signing ----------
+function hmac(key, data){ return crypto.createHmac("sha256", key).update(data).digest(); }
+function hash(data){ return crypto.createHash("sha256").update(data).digest("hex"); }
+
+function getSignatureKey(key, dateStamp, regionName, serviceName){
+  const kDate = hmac("AWS4" + key, dateStamp);
+  const kRegion = hmac(kDate, regionName);
+  const kService = hmac(kRegion, serviceName);
+  return hmac(kService, "aws4_request");
+}
+
+// ---------- search ----------
+async function searchAmazon(keywords){
+  const body = JSON.stringify({
+    Keywords: keywords,
+    SearchIndex: "Fashion",
+    PartnerTag: PARTNER_TAG,
+    PartnerType: "Associates",
+    Resources: [
+      "ItemInfo.Title",
+      "Offers.Listings.Price",
+      "CustomerReviews.StarRating"
+    ]
   });
 
-  if (process.env.AMAZON_TAG) {
-    params.append("tag", process.env.AMAZON_TAG);
-  }
+  const amzdate = new Date().toISOString().replace(/[:-]|\.\d{3}/g, "");
+  const datestamp = amzdate.slice(0,8);
 
-  return `${base}?${params.toString()}`;
+  const canonicalHeaders =
+    "content-encoding:amz-1.0\n" +
+    "content-type:application/json; charset=utf-8\n" +
+    `host:${HOST}\n` +
+    `x-amz-date:${amzdate}\n` +
+    `x-amz-target:com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems\n`;
+
+  const signedHeaders = "content-encoding;content-type;host;x-amz-date;x-amz-target";
+
+  const canonicalRequest =
+    "POST\n/paapi5/searchitems\n\n" +
+    canonicalHeaders + "\n" +
+    signedHeaders + "\n" +
+    hash(body);
+
+  const stringToSign =
+    "AWS4-HMAC-SHA256\n" +
+    amzdate + "\n" +
+    `${datestamp}/${REGION}/${SERVICE}/aws4_request\n` +
+    hash(canonicalRequest);
+
+  const signingKey = getSignatureKey(SECRET_KEY, datestamp, REGION, SERVICE);
+  const signature = crypto.createHmac("sha256", signingKey).update(stringToSign).digest("hex");
+
+  const headers = {
+    "Content-Type": "application/json; charset=utf-8",
+    "Content-Encoding": "amz-1.0",
+    "X-Amz-Date": amzdate,
+    "X-Amz-Target": "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems",
+    "Authorization": `AWS4-HMAC-SHA256 Credential=${ACCESS_KEY}/${datestamp}/${REGION}/${SERVICE}/aws4_request, SignedHeaders=${signedHeaders}, Signature=${signature}`
+  };
+
+  const res = await axios.post(ENDPOINT, body, { headers });
+
+  return (res.data.SearchResult?.Items || []).map(it => ({
+    title: it.ItemInfo?.Title?.DisplayValue,
+    price: it.Offers?.Listings?.[0]?.Price?.DisplayAmount,
+    rating: it.CustomerReviews?.StarRating || 0,
+    link: it.DetailPageURL
+  }));
 }
-  function getTopProducts(keyword) {
-  return [
-    {
-      title: "🔥 Korean Oversized Hoodie",
-      link: getAmazonLink(keyword + " oversized hoodie")
-    },
-    {
-      title: "🧥 Korean Aesthetic Jacket",
-      link: getAmazonLink(keyword + " jacket men women")
-    },
-    {
-      title: "👗 Korean Style Dress",
-      link: getAmazonLink(keyword + " korean dress women")
-    },
-    {
-      title: "👜 Korean Handbag",
-      link: getAmazonLink(keyword + " korean handbag stylish")
-    }
-  ];
-}
+
+function pickBest(list){
+  return list
+    .filter(p => p.title && p.link)
+    .sort((a,b) => (b.rating||0) - (a.rating||0))
+    .slice(0,3);
+  }
 function getOutfitKeyword(drama){
   const d = drama.toLowerCase();
 
