@@ -494,7 +494,7 @@ const safeProducts = [
         { text: "✨ Soft Sweater", url: safeProducts[2].link }
       ],
       [
-        { text: "🛍️ Full Outfit", url: outfitLink }
+        { text: "🛍 Full Outfit", url: safeProducts[0]?.link }
       ]
     ]
   }
