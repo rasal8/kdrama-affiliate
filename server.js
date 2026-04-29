@@ -45,7 +45,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const PARTNER_TAG = process.env.PARTNER_TAG;
 
 const HOST = "webservices.amazon.in";
-const REGION = "us-east-1";
+const REGION = "eu-west-1";
 const SERVICE = "ProductAdvertisingAPI";
 const ENDPOINT = "https://webservices.amazon.in/paapi5/searchitems";
 
