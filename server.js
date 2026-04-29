@@ -5,18 +5,26 @@ const app = express();
 
 const TelegramBot = require("node-telegram-bot-api");
 
-const bot = new TelegramBot(process.env.BOT_TOKEN, {
-  polling: {
-    interval: 300,
-    autoStart: true,
-    params: {
-      timeout: 10
+let bot;
+
+if (!global.telegramBot) {
+  bot = new TelegramBot(process.env.BOT_TOKEN, {
+    polling: {
+      autoStart: false
     }
-  }
-});
-bot.on("polling_error", (error) => {
-  console.log("Polling error:", error.message);
-});
+  });
+
+  bot.startPolling();
+
+  global.telegramBot = bot;
+
+  bot.on("polling_error", (error) => {
+    console.log("Polling error:", error.message);
+  });
+
+} else {
+  bot = global.telegramBot;
+}
 
 const PORT = process.env.PORT || 3000;
 // ✅ ROOT FIX
