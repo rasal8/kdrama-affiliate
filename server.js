@@ -98,8 +98,10 @@ async function searchAmazon(keywords){
   "POST\n" +
   "/paapi5/searchitems\n" +
   "\n" +
-  canonicalHeaders + "\n" +
-  signedHeaders + "\n" +
+  canonicalHeaders +
+  "\n" +
+  signedHeaders +
+  "\n" +
   hash(body);
 
   const stringToSign =
