@@ -464,9 +464,9 @@ bot.on("message", async (msg) => {
 // 1. Keyword (drama + genre)
 const outfitKeyword = getOutfitKeyword(drama, d.Genre);
 
-const outfitLink = getAmazonLink(outfitKeyword);
-
-const rawProducts = await getTopProducts(outfitKeyword) || [];
+const intent = detectIntent(outfitKeyword);
+const items = await searchAmazon(intent);
+const products = pickBest(items);
 
 const products = [...rawProducts].sort(() => 0.5 - Math.random());
 
