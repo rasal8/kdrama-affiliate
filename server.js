@@ -32,9 +32,9 @@ const axios = require("axios");
 // 🔥 AMAZON API CONFIG
 const crypto = require("crypto");
 
-const ACCESS_KEY = "YOUR_ACCESS_KEY";
-const SECRET_KEY = "YOUR_SECRET_KEY";
-const PARTNER_TAG = "yourtag-21";
+const ACCESS_KEY = process.env.ACCESS_KEY;
+const SECRET_KEY = process.env.SECRET_KEY;
+const PARTNER_TAG = process.env.PARTNER_TAG;
 
 const HOST = "webservices.amazon.in";
 const REGION = "us-east-1";
