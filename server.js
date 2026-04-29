@@ -70,12 +70,13 @@ function getSignatureKey(key, dateStamp, regionName, serviceName){
 
 // ---------- search ----------
 async function searchAmazon(keywords){
-  const body = JSON.stringify({
+  const payload = JSON.stringify({
     Keywords: keywords,
     SearchIndex: "Fashion",
     PartnerTag: PARTNER_TAG,
     PartnerType: "Associates",
     Resources: [
+      "Images.Primary.Medium",
       "ItemInfo.Title",
       "Offers.Listings.Price",
       "CustomerReviews.StarRating"
@@ -90,39 +91,45 @@ async function searchAmazon(keywords){
     "content-type:application/json; charset=utf-8\n" +
     "host:" + HOST + "\n" +
     "x-amz-date:" + amzdate + "\n" +
-    `x-amz-target:com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems\n`;
+    "x-amz-target:com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems\n";
 
-  const signedHeaders = "content-encoding;content-type;host;x-amz-date;x-amz-target";
+  const signedHeaders =
+    "content-encoding;content-type;host;x-amz-date;x-amz-target";
 
   const canonicalRequest =
-  "POST\n" +
-  "/paapi5/searchitems\n" +
-  "\n" +
-  canonicalHeaders +
-  "\n" +
-  signedHeaders +
-  "\n" +
-  hash(body);
+    "POST\n" +
+    "/paapi5/searchitems\n" +
+    "\n" +
+    canonicalHeaders +
+    signedHeaders + "\n" +
+    require("crypto").createHash("sha256").update(payload).digest("hex");
 
   const stringToSign =
     "AWS4-HMAC-SHA256\n" +
     amzdate + "\n" +
     `${datestamp}/${REGION}/${SERVICE}/aws4_request\n` +
-    hash(canonicalRequest);
+    require("crypto").createHash("sha256").update(canonicalRequest).digest("hex");
 
   const signingKey = getSignatureKey(SECRET_KEY, datestamp, REGION, SERVICE);
-  const signature = crypto.createHmac("sha256", signingKey).update(stringToSign).digest("hex");
+
+  const signature = require("crypto")
+    .createHmac("sha256", signingKey)
+    .update(stringToSign)
+    .digest("hex");
+
+  const authorizationHeader =
+    `AWS4-HMAC-SHA256 Credential=${ACCESS_KEY}/${datestamp}/${REGION}/${SERVICE}/aws4_request, SignedHeaders=${signedHeaders}, Signature=${signature}`;
 
   const headers = {
-  "Content-Type": "application/json; charset=utf-8",
-  "Content-Encoding": "amz-1.0",
-  "X-Amz-Date": amzdate,
-  "X-Amz-Target": "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems",
-  "Authorization": `AWS4-HMAC-SHA256 Credential=${ACCESS_KEY}/${datestamp}/${REGION}/${SERVICE}/aws4_request, SignedHeaders=${signedHeaders}, Signature=${signature}`,
-  "Host": HOST
-};
+    "Content-Type": "application/json; charset=utf-8",
+    "Content-Encoding": "amz-1.0",
+    "X-Amz-Date": amzdate,
+    "X-Amz-Target": "com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems",
+    "Authorization": authorizationHeader,
+    "Host": HOST
+  };
 
-  const res = await axios.post(ENDPOINT, body, { headers });
+  const res = await axios.post(ENDPOINT, payload, { headers });
 
   return (res.data.SearchResult?.Items || []).map(it => ({
     title: it.ItemInfo?.Title?.DisplayValue,
@@ -130,7 +137,7 @@ async function searchAmazon(keywords){
     rating: it.CustomerReviews?.StarRating || 0,
     link: it.DetailPageURL
   }));
-}
+                                                   }
 
 function pickBest(list){
   return list
