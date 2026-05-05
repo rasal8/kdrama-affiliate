@@ -99,7 +99,7 @@ bot.on("message", async (msg) => {
 
 ⭐ ${d.imdbRating || "8.5"}/10  
 🎭 Korean Aesthetic  
-
+📹 Official Platforms: Watch Now
 💫 Steal The Look 👇
 `;
 
